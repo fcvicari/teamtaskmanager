@@ -1,3 +1,4 @@
+import { ThemeProvider } from "@/components/providers/theme-provider";
 import type { Metadata } from "next";
 import { Comfortaa } from 'next/font/google';
 import "./globals.css";
@@ -18,11 +19,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${comfortaa.className} antialiased`}
+        className={`${comfortaa.className} antialiased text-[hsl(var(--text01))] bg-[url('/backgroundLight.png')] dark:bg-[url('/backgroundDark.png')] bg-no-repeat bg-bottom 2xl:bg-[length:100%_28rem]`}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
