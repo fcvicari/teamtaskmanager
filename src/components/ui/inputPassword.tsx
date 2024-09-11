@@ -1,14 +1,16 @@
-import { forwardRef, ReactNode } from "react";
+import { forwardRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
+import { Eye, EyeOffIcon } from "lucide-react";
+import { IconComponent } from "../icon";
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputPasswordProps extends React.InputHTMLAttributes<HTMLInputElement> {
   htmlFor?: string;
-  children?: ReactNode;
 }
 
-const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, required, htmlFor, children, ...props }, ref) => {
+const InputPassword = forwardRef<HTMLInputElement, InputPasswordProps>(
+  ({ className, required, htmlFor, ...props }, ref) => {
+    const [isPassword, setIsPassword] = useState(true);
     
     return (
       <label 
@@ -20,17 +22,17 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
       >
         <input
-          type={type}
+          type={isPassword ? 'password' : "text"}
           ref={ref}
           className="w-full h-full border-0 outline-none bg-transparent border-hidden"
           {...props}
         />
-        {children }
+        <IconComponent htmlFor={htmlFor} icon={isPassword ? Eye : EyeOffIcon} onClick={() => setIsPassword(!isPassword)}/>
       </label>
     )
   }
 )
-Input.displayName = "Input"
+InputPassword.displayName = "InputPassword"
 
-export { Input };
+export { InputPassword };
 

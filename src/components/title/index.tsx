@@ -8,8 +8,8 @@ interface TitleProps extends LabelHTMLAttributes<HTMLLabelElement> {
 export function Title({ size = 'h1', children, ...props }: TitleProps) {
   const buttonClass = {
     size: {
-      h1: 'text-xl',
-      h2: 'text-base',
+      h1: 'text-xl pt-2',
+      h2: 'text-base pt-1',
       h3: 'text-xs',
     },
   }
