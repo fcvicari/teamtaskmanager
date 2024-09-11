@@ -1,4 +1,4 @@
-import { Label } from "@/components/ui/label";
+import { Label } from "@/components/label/label";
 import Image from "next/image";
 import { ModeToggle } from "../toggle/setTheme";
 
@@ -9,7 +9,7 @@ import { ButtonLink } from "../button/buttonLink";
 
 export function PublicHeader() {
   return (
-    <header className="w-full">
+    <header className="w-full bg-background">
       <div className="flex justify-between items-center py-2 px-3 md:px-10 lg:px-20 w-full border-b-2 border-[hsl(var(--sessionBorder))]">
         <Image alt="Team Tash Manager" src={logoLight} width={100} height={100} className="inline dark:hidden" />
         <Image alt="Team Tash Manager" src={logoDark} width={100} height={100} className="hidden dark:inline" />

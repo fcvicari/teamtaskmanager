@@ -1,14 +1,15 @@
 'use client'
 
+import { Button } from "@/components/button/button";
 import { ButtonLink } from "@/components/button/buttonLink";
 import { ContainerDialog } from "@/components/container/containerDialog";
 import { ContainerFields } from "@/components/container/containerFields";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/form/form";
+import { Input } from "@/components/input/input";
+import { InputPassword } from "@/components/input/inputPassword";
 import { Title } from "@/components/title";
-import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { InputPassword } from "@/components/ui/inputPassword";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowLeft } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -121,7 +122,7 @@ export default function SingUp() {
             </ContainerFields>
             <Button type="submit" size="full">Criar conta</Button>
           </form>
-          <ButtonLink variant="link" url="/singIn" label="Voltar para o login" />
+          <ButtonLink variant="link" url="/singIn" label="Voltar para o login" icon={ArrowLeft} />
         </ContainerDialog>
       </Form>
     </div>

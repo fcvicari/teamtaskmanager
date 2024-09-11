@@ -1,13 +1,13 @@
 'use client'
 
+import { Button } from "@/components/button/button";
 import { ContainerDialog } from "@/components/container/containerDialog";
 import { ContainerFields } from "@/components/container/containerFields";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/form/form";
+import { Input } from "@/components/input/input";
+import { InputPassword } from "@/components/input/inputPassword";
+import { Label } from "@/components/label/label";
 import { Title } from "@/components/title";
-import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { InputPassword } from "@/components/ui/inputPassword";
-import { Label } from "@/components/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
