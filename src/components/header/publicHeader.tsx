@@ -15,8 +15,8 @@ export function PublicHeader() {
         <Image alt="Team Tash Manager" src={logoDark} width={100} height={100} className="hidden dark:inline" />
         <div className="flex gap-4 justify-center content-center items-end md:items-center">
           <div className="flex flex-col md:flex-row gap-2 items-center">
-            <Label>Não tem uma conta?</Label>
-            <ButtonLink url="/singUp" label="Criar uma conta" />
+            <Label>Don&lsquo;t have an account?</Label>
+            <ButtonLink url="/singUp" label="Create an account" />
           </div>
           <ModeToggle />
         </div>

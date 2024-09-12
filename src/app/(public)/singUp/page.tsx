@@ -4,7 +4,7 @@ import { Button } from "@/components/button/button";
 import { ButtonLink } from "@/components/button/buttonLink";
 import { ContainerDialog } from "@/components/container/containerDialog";
 import { ContainerFields } from "@/components/container/containerFields";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/form/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/form/form";
 import { Input } from "@/components/input/input";
 import { InputPassword } from "@/components/input/inputPassword";
 import { Title } from "@/components/title";
@@ -15,19 +15,19 @@ import { z } from "zod";
 
 const singUpSchema = z
   .object({
-    name: z.string().min(1, 'Informe seu nome'),
-    email: z.string().email('Informe um e-mail válido.').toLowerCase(),
+    name: z.string().min(1, 'Enter your name'),
+    email: z.string().email('Provide a valid e-mail').toLowerCase(),
     password: z
       .string()
-      .min(8, 'A senha deve conter no mínimo 8 caracteres.')
+      .min(8, 'Must be at least 8 characters long')
       .refine((value) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(value), {
-        message: 'Deve conter letras maiúsculas, minúsculas e números.',
+        message: 'Must have uppercase, lowercase letters and numbers',
       }),
     checkPassword: z
       .string()
-      .min(8, 'A senha deve conter no mínimo 8 caracteres.')
+      .min(8, 'Must be at least 8 characters long')
       .refine((value) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(value), {
-        message: 'Deve conter letras maiúsculas, minúsculas e números.',
+        message: 'Must have uppercase, lowercase letters and numbers',
       }),
   })
   .superRefine((data, ctx) => {
@@ -35,7 +35,7 @@ const singUpSchema = z
       ctx.addIssue({
         code: z.ZodIssueCode.invalid_date,
         path: ['checkPassword'],
-        message: 'As senhas devem ser iguais.',
+        message: 'Passwords must be the same',
       })
     }
   })
@@ -61,7 +61,7 @@ export default function SingUp() {
     <div className="flex justify-center items-center content-center w-full min-h-[80dvh]">
       <Form {...methods}>
         <ContainerDialog>
-          <Title size="h1">Criar minha conta</Title>
+          <Title size="h1">Register new user</Title>
           <form onSubmit={methods.handleSubmit(submitSingUp)}>
           <ContainerFields>
             <FormField
@@ -69,9 +69,8 @@ export default function SingUp() {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel htmlFor="name">Nome</FormLabel>
                     <FormControl>
-                      <Input htmlFor="name" id="name" required placeholder="Informe seu nome" {...field} />
+                      <Input htmlFor="name" id="name" required placeholder="Name" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -83,9 +82,8 @@ export default function SingUp() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel htmlFor="email">E-Mail</FormLabel>
                     <FormControl>
-                      <Input htmlFor="email" id="email" required placeholder="Informe seu e-mail" {...field} />
+                      <Input htmlFor="email" id="email" required placeholder="E-mail" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -97,9 +95,8 @@ export default function SingUp() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel htmlFor="password">Senha</FormLabel>
                     <FormControl>
-                      <InputPassword id="password" htmlFor="password" required placeholder="Informe sua senha" {...field} />
+                      <InputPassword id="password" htmlFor="password" required placeholder="Password" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -111,18 +108,17 @@ export default function SingUp() {
                 name="checkPassword"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel htmlFor="checkPassword">Confirme sua senha</FormLabel>
                     <FormControl>
-                      <InputPassword id="checkPassword" htmlFor="checkPassword" required placeholder="Confirme sua senha" {...field} />
+                      <InputPassword id="checkPassword" htmlFor="checkPassword" required placeholder="Confirm your password" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </ContainerFields>
-            <Button type="submit" size="full">Criar conta</Button>
+            <Button type="submit" size="full">Register</Button>
           </form>
-          <ButtonLink variant="link" url="/singIn" label="Voltar para o login" icon={ArrowLeft} />
+          <ButtonLink variant="link" url="/singIn" label="Back to login" icon={ArrowLeft} />
         </ContainerDialog>
       </Form>
     </div>

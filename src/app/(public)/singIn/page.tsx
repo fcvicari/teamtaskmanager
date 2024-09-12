@@ -3,7 +3,7 @@
 import { Button } from "@/components/button/button";
 import { ContainerDialog } from "@/components/container/containerDialog";
 import { ContainerFields } from "@/components/container/containerFields";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/form/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/form/form";
 import { Input } from "@/components/input/input";
 import { InputPassword } from "@/components/input/inputPassword";
 import { Label } from "@/components/label/label";
@@ -13,8 +13,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const singInSchema = z.object({
-  email: z.string().email('Informe um e-mail válido').toLowerCase(),
-  password: z.string().min(8, 'Deve ter pelo menos 8 caracteres'),
+  email: z.string().email('Provide a valid e-mail').toLowerCase(),
+  password: z.string().min(8, 'Must be at least 8 characters long'),
 })
 
 type singInFormDate = z.infer<typeof singInSchema>
@@ -36,7 +36,7 @@ export default function SingIn() {
     <div className="flex justify-center items-center content-center w-full min-h-[80dvh]">
       <Form {...methods}>
         <ContainerDialog>
-          <Title size="h1">Bem-vindo!</Title>
+          <Title size="h1">Welcome!</Title>
           <form onSubmit={methods.handleSubmit(submitSingIn)}>
           <ContainerFields>
             <FormField
@@ -44,9 +44,8 @@ export default function SingIn() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel htmlFor="email">E-Mail</FormLabel>
                     <FormControl>
-                      <Input htmlFor="email" id="email" placeholder="Informe seu e-mail" {...field} />
+                      <Input htmlFor="email" id="email" placeholder="E-mail" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -57,18 +56,17 @@ export default function SingIn() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel htmlFor="password">Senha</FormLabel>
                     <FormControl>
-                      <InputPassword id="password" htmlFor="password" placeholder="Informe seu senha" {...field} />
+                      <InputPassword id="password" htmlFor="password" placeholder="Password" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </ContainerFields>
-            <Button type="submit" size="full">Entrar</Button>
+            <Button type="submit" size="full">Sing in</Button>
           </form>
-          <Label className="w-full text-center py-4">Esqueci minha senha</Label>
+          <Label className="w-full text-center py-4">I forgot my password</Label>
         </ContainerDialog>
       </Form>
     </div>

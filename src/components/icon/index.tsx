@@ -21,7 +21,7 @@ export function IconComponent({ onClick, htmlFor, icon: Icon }: IconComponentPro
   return (
     <label htmlFor={htmlFor} onClick={() => handleIconClick()} >
       <Icon
-        className={`font-normal text-xs ${onClick ? 'cursor-pointer' : 'cursor-default'}`}
+        className={`text-slate-400 size-5 ${onClick ? 'cursor-pointer' : 'cursor-default'}`}
       />
     </label>
   )
