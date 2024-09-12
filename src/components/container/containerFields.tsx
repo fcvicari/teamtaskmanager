@@ -6,7 +6,7 @@ interface ContainerProps {
 
 export function ContainerFields({ children }: ContainerProps) {
   return (
-    <div className="flex flex-col space-y-1 py-2">
+    <div className="flex flex-col space-y-0 py-2">
       { children }
     </div>
   )
