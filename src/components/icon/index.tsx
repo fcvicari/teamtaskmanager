@@ -6,13 +6,18 @@ import { ComponentType } from "react";
 interface IconComponentProps {
   icon?: ComponentType<LucideProps>;
   onClick?: () => void;
+  disabled?: boolean;
   htmlFor?: string;
 }
 
-export function IconComponent({ onClick, htmlFor, icon: Icon }: IconComponentProps) {
+export function IconComponent({ onClick, htmlFor, disabled=false, icon: Icon }: IconComponentProps) {
   if (!Icon) return null
 
   function handleIconClick() {
+    if (disabled) {
+      return
+    }
+
     if (onClick) {
       onClick()
     }
@@ -21,7 +26,7 @@ export function IconComponent({ onClick, htmlFor, icon: Icon }: IconComponentPro
   return (
     <label htmlFor={htmlFor} onClick={() => handleIconClick()} >
       <Icon
-        className={`text-slate-400 size-5 ${onClick ? 'cursor-pointer' : 'cursor-default'}`}
+        className={`text-slate-400 size-5 ${onClick && !disabled ? 'cursor-pointer' : 'cursor-default'}`}
       />
     </label>
   )

@@ -1,5 +1,5 @@
 import { PublicFooter } from '@/components/footer/publicFooter'
-import { PublicHeader } from '@/components/header/publicHeader'
+import { RestrictHeader } from '@/components/header/restrictHeader'
 import AuthProvider from '../../context/authProvider'
 
 export default async function InvestorLayout({
@@ -10,7 +10,7 @@ export default async function InvestorLayout({
   return (
     <AuthProvider>
       <div className="flex flex-col w-full min-h-dvh">
-        <PublicHeader />
+        <RestrictHeader />
 
         <main className="flex w-full px-3 md:px-10 lg:px-20 border-[hsl(var(--sessionBorder))]">
           {children}

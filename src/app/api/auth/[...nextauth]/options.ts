@@ -15,7 +15,7 @@ export const options: NextAuthOptions = {
           email: credentials?.email,
         }
 
-        const resp = await fetch(process.env.NEXT_PUBLIC_BASE_URL + '/auth', {
+        const resp = await fetch(process.env.BACKEND_URL + '/singin', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -23,6 +23,13 @@ export const options: NextAuthOptions = {
           body: JSON.stringify(userCredential),
           cache: 'no-store',
         })
+
+        if (!resp.ok) {
+          const error = await resp.json()
+
+          console.log('error.message options', error.message)
+          throw new Error(error.message)
+        }
 
         const user = await resp.json()
 
