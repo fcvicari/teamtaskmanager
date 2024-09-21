@@ -9,7 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import { Input } from "@/components/input/input";
 import { InputPassword } from "@/components/input/inputPassword";
 import { Title } from "@/components/title";
-import { createNewUserFormDate, createNewUserSchema } from "@/schema/createNewUser";
+import { createNewUserFormDate, createNewUserSchema } from "@/schema/userSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from 'next/navigation';

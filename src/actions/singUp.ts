@@ -1,6 +1,6 @@
 "use server"
 
-import { createNewUserSchema } from "@/schema/createNewUser";
+import { createNewUserSchema } from "@/schema/userSchema";
 import { revalidateTag } from "next/cache";
 import { createServerAction, ZSAError } from "zsa";
 

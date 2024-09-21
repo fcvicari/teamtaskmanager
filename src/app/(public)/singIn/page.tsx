@@ -1,19 +1,21 @@
 'use client'
 
+import { actionActivateUser } from "@/actions/activateUser";
 import { Button } from "@/components/button/button";
 import { ContainerDialog } from "@/components/container/containerDialog";
 import { ContainerFields } from "@/components/container/containerFields";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/form/form";
 import { Input } from "@/components/input/input";
 import { InputPassword } from "@/components/input/inputPassword";
-import { Label } from "@/components/label/label";
 import { Title } from "@/components/title";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import AlterPassword from "./alterPassword";
+import ResetPassword from "./resetPassword";
 
 const singInSchema = z.object({
   email: z.string().email('Provide a valid e-mail').toLowerCase(),
@@ -22,7 +24,14 @@ const singInSchema = z.object({
 
 type singInFormDate = z.infer<typeof singInSchema>
 
-export default function SingIn() {
+interface SingInProps {
+  searchParams?: {
+    type: string;
+    token: string;
+  }
+}
+
+export default function SingIn({ searchParams }: SingInProps) {
   const methods = useForm<singInFormDate>({
     resolver: zodResolver(singInSchema),
     defaultValues: {
@@ -32,6 +41,18 @@ export default function SingIn() {
   })
   const router = useRouter()
   const [errorMessage, setErrorMessage] = useState('')
+
+  useEffect(() => {
+    async function activeUser(token: string) {
+      await actionActivateUser({token})
+    }
+
+    if (searchParams && searchParams.type && searchParams.token) {
+      if (searchParams.type = 'activate') {
+        activeUser(searchParams.token)
+      }
+    }
+  }, [])
 
   async function submitSingIn({ email, password }: singInFormDate) {
     const resp = await signIn(
@@ -47,7 +68,7 @@ export default function SingIn() {
       router.push('/restrict')
     } else {
       if (resp?.error) {
-        setErrorMessage(resp?.error)
+        setErrorMessage(resp.error)
       } else {
         setErrorMessage('There was a problem with your request.')
       }
@@ -55,7 +76,7 @@ export default function SingIn() {
   }
 
   return (
-    <div className="flex justify-center items-center content-center w-full min-h-[80dvh]">
+    <div className="flex flex-col justify-center items-center content-center w-full min-h-[80dvh]">
       <Form {...methods}>
         <ContainerDialog error={errorMessage}>
           <Title size="h1">Welcome!</Title>
@@ -88,7 +109,16 @@ export default function SingIn() {
             </ContainerFields>
             <Button type="submit" size="full">Sing in</Button>
           </form>
-          <Label className="w-full text-center py-4">I forgot my password</Label>
+
+          <ResetPassword />
+
+          { searchParams &&
+            searchParams.type &&
+            searchParams.token &&
+            searchParams.type === 'reset' &&
+            <AlterPassword token={searchParams.token} />
+          }
+
         </ContainerDialog>
       </Form>
     </div>

@@ -27,7 +27,6 @@ export const options: NextAuthOptions = {
         if (!resp.ok) {
           const error = await resp.json()
 
-          console.log('error.message options', error.message)
           throw new Error(error.message)
         }
 
