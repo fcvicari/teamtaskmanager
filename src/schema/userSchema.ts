@@ -29,6 +29,14 @@ export const createNewUserSchema = z
 
 export type createNewUserFormDate = z.infer<typeof createNewUserSchema>
 
+export const changeProfileSchema = z
+  .object({
+    name: z.string().min(1, 'Enter your name'),
+    email: z.string().email('Provide a valid e-mail').toLowerCase(),
+  })
+
+export type changeProfileFormDate = z.infer<typeof changeProfileSchema>
+
 
 export const resetPasswordSchema = z
   .object({
@@ -36,8 +44,6 @@ export const resetPasswordSchema = z
   })
 
 export type resetPasswordFormDate = z.infer<typeof resetPasswordSchema>
-
-
 
 export const alterPasswordSchema = z
   .object({

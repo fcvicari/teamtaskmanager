@@ -5,15 +5,15 @@ import { revalidateTag } from "next/cache";
 import { createServerAction, ZSAError } from "zsa";
 
 
-export const actionSingUp = createServerAction()
+export const actionChangeProfile = createServerAction()
   .input(changeProfileSchema)
-  .handler(async ({ input: {name, email, password} }) => {
-    const response = await fetch(process.env.BACKEND_URL + '/singup', {
+  .handler(async ({ input: {name, email } }) => {
+    const response = await fetch(process.env.BACKEND_URL + '/profile', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({name, email, password }),
+      body: JSON.stringify({ name, email }),
       cache: 'no-store',
     })
     .catch(() => {

@@ -41,10 +41,11 @@ export default function SingIn({ searchParams }: SingInProps) {
   })
   const router = useRouter()
   const [errorMessage, setErrorMessage] = useState('')
+  const [ isPending, setIsPending ] = useState(false)
 
   useEffect(() => {
     async function activeUser(token: string) {
-      await actionActivateUser({token})
+      await actionActivateUser({ token })
     }
 
     if (searchParams && searchParams.type && searchParams.token) {
@@ -55,6 +56,8 @@ export default function SingIn({ searchParams }: SingInProps) {
   }, [])
 
   async function submitSingIn({ email, password }: singInFormDate) {
+    setIsPending(true)
+
     const resp = await signIn(
       'credentials',
       {
@@ -64,6 +67,7 @@ export default function SingIn({ searchParams }: SingInProps) {
       }
     )
 
+    setIsPending(false)
     if (resp?.ok) {
       router.push('/restrict')
     } else {
@@ -88,7 +92,13 @@ export default function SingIn({ searchParams }: SingInProps) {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input htmlFor="email" id="email" placeholder="E-mail" {...field} />
+                      <Input
+                        htmlFor="email"
+                        id="email"
+                        placeholder="E-mail"
+                        {...field}
+                        disabled={isPending}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -100,14 +110,27 @@ export default function SingIn({ searchParams }: SingInProps) {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <InputPassword id="password" htmlFor="password" placeholder="Password" {...field} />
+                      <InputPassword
+                        id="password"
+                        htmlFor="password"
+                        placeholder="Password"
+                        {...field}
+                        disabled={isPending}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </ContainerFields>
-            <Button type="submit" size="full">Sing in</Button>
+            <Button
+              type="submit"
+              size="full"
+              isSubmitting={isPending}
+              disabled={isPending}
+            >
+              Sing in
+            </Button>
           </form>
 
           <ResetPassword />
