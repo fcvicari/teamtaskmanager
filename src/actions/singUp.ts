@@ -1,12 +1,12 @@
 "use server"
 
-import { changeProfileSchema } from "@/schema/userSchema";
+import { createNewUserSchema } from "@/schema/userSchema";
 import { revalidateTag } from "next/cache";
 import { createServerAction, ZSAError } from "zsa";
 
 
 export const actionSingUp = createServerAction()
-  .input(changeProfileSchema)
+  .input(createNewUserSchema)
   .handler(async ({ input: {name, email, password} }) => {
     const response = await fetch(process.env.BACKEND_URL + '/singup', {
       method: 'POST',
