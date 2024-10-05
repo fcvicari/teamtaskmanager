@@ -1,16 +1,27 @@
 'use client'
 
-import { LogOut, MoonIcon, SunIcon } from "lucide-react"
+import { Profile } from "@/app/restrict/profile/profile"
+import { LogOut, MoonIcon, SunIcon, User } from "lucide-react"
 import { signOut, useSession } from "next-auth/react"
 import { useTheme } from "next-themes"
-import { useRouter } from "next/navigation"
+import { redirect } from "next/navigation"
+import { useState } from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "../avatar/avatar"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from "./dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./dropdown-menu"
+import { DropdownItemMenu } from "./dropItemMenu"
 
 export function UserMenu() {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const { setTheme, theme } = useTheme()
-  const router = useRouter()
+  const [ openProfile, setOpenProfile] = useState(false)
+
+  if (status !== "authenticated" && status !== "loading") {
+    redirect('/singIn')
+  }
+
+  function handleSetOpenProfile() {
+    setOpenProfile(!openProfile)
+  }
 
   return (
     <div className="flex gap-1 justify-center content-center items-end md:items-center">
@@ -21,30 +32,27 @@ export function UserMenu() {
             <AvatarFallback>TT</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-64 mr-3">
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuContent className="w-80 mr-3 shadow-md">
+          <DropdownMenuLabel className="flex items-center content-center gap-2 pb-2">
+            <Avatar className='h-10 w-10 md:h-12 md:w-12'>
+              <AvatarImage src={session?.user.avatar ? session.user.avatar : '/avatar.png'} />
+              <AvatarFallback>TT</AvatarFallback>
+            </Avatar>
+            <div className="flex flex-col justify-start text-left w-full" >
+              <span className="text-primary text-base"> { session?.user.name } </span>
+              <span className="text-xs"> { session?.user.email } </span>
+            </div>
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem onClick={() => router.push('/restrict/profile')}>
-              My profile
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
-              Switch theme
-              <DropdownMenuShortcut className="flex">
-                <SunIcon className="text-primary h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              </DropdownMenuShortcut>
-            </DropdownMenuItem>
+            <DropdownItemMenu onClick={() => handleSetOpenProfile()} label="My profile" icon={User} />
+            <DropdownItemMenu onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} label="Switch theme" icon={theme === 'light' ? SunIcon : MoonIcon}/>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => signOut()}>
-            Log out
-            <DropdownMenuShortcut>
-              <LogOut className="h-[1.2rem] w-[1.2rem]" />
-            </DropdownMenuShortcut>
-          </DropdownMenuItem>
+          <DropdownItemMenu onClick={() => signOut()} label="Log out" icon={LogOut} />
         </DropdownMenuContent>
       </DropdownMenu>
-   </div>
+      <Profile opened={openProfile} setOpened={() => handleSetOpenProfile()} />
+    </div>
   )
 }
